@@ -1,3 +1,5 @@
+Factory = require('../../src/rosie')
+
 describe('Factory', function() {
   afterEach(function() {
     Factory.factories = {};

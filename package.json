@@ -13,5 +13,8 @@
   },
   "dependencies": {
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "scripts": {
+    "test": "jasmine-node ./spec && jshint ./src"
+  }
 }
