@@ -81,6 +81,35 @@ describe('Factory', function() {
       });
     });
 
+    describe("set_attrs", function() {
+      it('should add given values to attributes', function() {
+        factory.set_attrs({'fred': 1, 'wilma': 3});
+
+        expect(factory.attributes().fred).toEqual(1);
+        expect(factory.attributes().wilma).toEqual(3);
+      });
+
+      it('should return the factory', function() {
+        expect(factory.set_attrs({'foo': 1})).toBe(factory);
+      });
+    });
+
+    describe("set_attrs", function() {
+      it('should add given values to attributes', function() {
+        factory.set_funcs({
+          'fred': function() {return 'x1'},
+          'wilma': function() {return 'y3'}
+        });
+
+        expect(factory.functions().fred()).toEqual('x1');
+        expect(factory.functions().wilma()).toEqual('y3');
+      });
+
+      it('should return the factory', function() {
+        expect(factory.set_funcs({'foo': function() { } })).toBe(factory);
+      });
+    });
+
     describe('sequence', function() {
       it('should return the factory', function() {
         expect(factory.sequence('id')).toBe(factory);

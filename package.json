@@ -12,9 +12,11 @@
     "node": "~0.4.12"
   },
   "dependencies": {
+    "underscore": "~1.2.0"
   },
   "devDependencies": {},
   "scripts": {
     "test": "jasmine-node ./spec && jshint ./src"
-  }
+  },
+  "main": "src/rosie.js"
 }
