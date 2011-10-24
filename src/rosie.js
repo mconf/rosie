@@ -74,13 +74,35 @@ Factory.prototype = {
     }
     return funcs;
   },
+  after_create: function(callback) {
+    if (!this.hasOwnProperty('postHooks')) {
+      this.postHooks = [];
+    }
+    this.postHooks.push(callback);
+  },
+  run_post_hooks: function(result, callback) {
+    if (!this.hasOwnProperty('postHooks')) {
+      this.postHooks = [];
+    }
+    this.postHooks.push(callback);
+    if (this.postHooks.length > 0) {
+      current = this.postHooks.shift();
+      next = this.postHooks.shift();
 
-  build: function(attrs) {
+      if (next === null || next === undefined) {
+        next = result;
+      }
+    }
+    return current.call(result, next);
+
+  },
+  build: function(attrs, callback) {
     var result = this.construct ? new this.construct() : {};
-
     result = _.extend(result, this.attributes(attrs));
     result = _.extend(result, this.functions());
-
+    if (callback !== null && callback !== undefined) {
+      this.run_post_hooks(result, callback);
+    }
     return result;
   }
 };
@@ -93,8 +115,8 @@ Factory.define = function(name, constructor) {
   return factory;
 };
 
-Factory.build = function(name, attrs) {
-  return this.factories[name].build(attrs);
+Factory.build = function(name, attrs, callback) {
+  return this.factories[name].build(attrs, callback);
 };
 
 Factory.attributes = function(name, attrs) {

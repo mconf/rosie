@@ -55,6 +55,38 @@ describe('Factory', function() {
       expect(Factory.attributes('thing', {name:'changed'})).toEqual({name:'changed'});
     });
   });
+  describe('async', function() {
+    beforeEach(function() {
+      Factory.define('async')
+        .attr('foo', 1)
+        .attr('bar', 2)
+      Factory.define('async2')
+        .attr('foo', 1)
+        .attr('bar', 2)
+        .after_create(function(next) {
+          this.foo = 3;
+          next(this);
+          return
+        })
+    });
+
+    it('should call callback supplied to build', function() {
+      jasmine.asyncSpecWait();
+      Factory.build('async', {}, function(obj) {
+        expect(obj.foo).toBe(1);
+        expect(obj.bar).toBe(2);
+        jasmine.asyncSpecDone();
+      })
+    });
+    it('should call after_create callbacks', function() {
+      jasmine.asyncSpecWait();
+      Factory.build('async2', {}, function(obj) {
+        expect(obj.foo).toBe(3);
+        expect(obj.bar).toBe(2);
+        jasmine.asyncSpecDone();
+      })
+    });
+  })
 
   describe('prototype', function() {
     var factory;
