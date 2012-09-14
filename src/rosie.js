@@ -111,6 +111,19 @@ Factory.prototype = {
       this.run_post_hooks(result, callback);
     }
     return result;
+  },
+  create: function(attrs, callback) {
+    obj = this.build(attrs);
+    _this = this;
+    obj.save().complete(function(err, result) {
+      if (err) {
+        throw err;
+      }
+      if (callback !== null && callback !== undefined) {
+        _this.run_post_hooks(result, callback);
+      }
+    });
+    return obj;
   }
 };
 
@@ -124,6 +137,10 @@ Factory.define = function(name, constructor) {
 
 Factory.build = function(name, attrs, callback) {
   return this.factories[name].build(attrs, callback);
+};
+
+Factory.create = function(name, attrs, callback) {
+  return this.factories[name].create(attrs, callback);
 };
 
 Factory.attributes = function(name, attrs) {
