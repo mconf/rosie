@@ -2,7 +2,7 @@
   "author": "Brandon Keepers <brandon@opensoul.org> (http://opensoul.org/)",
   "name": "rosie",
   "description": "Rosie is a factory for building JavaScript objects, mostly useful for setting up test data. It is inspired by factory_girl.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/bkeepers/rosie",
   "repository": {
     "type": "git",
