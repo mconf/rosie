@@ -97,7 +97,14 @@ Factory.prototype = {
 
   },
   build: function(attrs, callback) {
-    var result = this.construct ? new this.construct() : {};
+    var result = {};
+    if (this.construct) {
+      if (_.isFunction(this.construct)) {
+        result = new this.construct();
+      } else if (_.isFunction(this.construct.build)) {
+        result = this.construct.build();
+      }
+    }
     result = _.extend(result, this.attributes(attrs));
     result = _.extend(result, this.functions());
     if (callback !== null && callback !== undefined) {
