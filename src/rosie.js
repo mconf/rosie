@@ -1,3 +1,5 @@
+_ = require('underscore');
+
 var Factory = function(constructor) {
   this.construct = constructor;
   this.attrs = {};
@@ -39,7 +41,15 @@ Factory.prototype = {
 
   build: function(attrs) {
     var result = this.attributes(attrs);
-    return this.construct ? new this.construct(result) : result;
+    if (this.construct) {
+      if (_.isFunction(this.construct.build)) {
+        result = this.construct.build(result);
+      } else {
+        tmp = new this.construct();
+        result = _.extend(tmp, result);
+      }
+    }
+    return result;
   },
 
   extend: function(name) {

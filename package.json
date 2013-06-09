@@ -4,7 +4,7 @@
   , "keywords": ["factory", "rosie", "test"]
   , "author": "Brandon Keepers <brandon@opensoul.org>"
   , "contributors": []
-  , "dependencies"  : {}
+  , "dependencies"  : { "underscore": ">= 1.2.0" }
   , "engines": { "node": "*" }
   , "repository": { "type": "git", "url": "git://github.com/bkeepers/rosie.git" }
   , "main": "src/rosie.js"
