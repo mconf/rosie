@@ -52,6 +52,19 @@ Factory.prototype = {
     return result;
   },
 
+  create: function(attrs, callback) {
+    obj = this.build(attrs);
+    obj.save().complete(function(err, result) {
+      if (err) {
+        throw err;
+      }
+      if (callback !== null && callback !== undefined) {
+        callback(result);
+      }
+    });
+    return obj;
+  },
+
   extend: function(name) {
     var factory = Factory.factories[name];
     // Copy the parent's constructor
@@ -91,6 +104,10 @@ Factory.buildList = function(name, size, attrs, options) {
     objs.push(Factory.build(name, attrs, options));
   }
   return objs;
+};
+
+Factory.create = function(name, attrs, callback) {
+  return this.factories[name].create(attrs, callback);
 };
 
 Factory.attributes = function(name, attrs) {
