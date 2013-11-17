@@ -107,6 +107,7 @@ Factory.buildList = function(name, size, attrs, options) {
 };
 
 Factory.create = function(name, attrs, callback) {
+  attrs = _.clone(attrs);
   return this.factories[name].create(attrs, callback);
 };
 
